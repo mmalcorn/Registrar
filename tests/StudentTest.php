@@ -82,6 +82,28 @@
             $this->assertEquals($test_student, $result[0]);
         }
 
+        function testGetAll()
+        {
+            //Arrange
+            $test_name_one = "Linda Ronstandt";
+            $test_date_one = "2016-12-12";
+            $test_id = null;
+            $test_student_one = new Student($test_name_one, $test_date_one);
+            $test_student_one->save();
+
+            $test_name_two = "Pablo Picasso";
+            $test_date_two = "2016-11-01";
+            $test_id = null;
+            $test_student_two = new Student($test_name_two, $test_date_two);
+            $test_student_two->save();
+
+            //Act
+            $result = Student::getAll();
+
+            //Assert
+            $this->assertEquals([$test_student_one, $test_student_two], $result);
+        }
+
         function testDeleteAll()
         {
             //Arrange

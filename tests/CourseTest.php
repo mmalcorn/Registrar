@@ -18,6 +18,7 @@
         protected function tearDown()
         {
             Student::deleteAll();
+            Course::deleteAll();
         }
 
         function testGetCourseName()
@@ -35,7 +36,7 @@
 
         }
 
-        function tesGetCourseNumber()
+        function testGetCourseNumber()
         {
             //Arrange
             $test_course_name = "Intro to Computer Science";
@@ -43,7 +44,7 @@
             $test_course = new Course($test_course_name, $test_course_number);
 
             //Act
-            $result = $test_course->getCourseName();
+            $result = $test_course->getCourseNumber();
 
             //Assert
             $this->assertEquals($test_course_number, $result);
@@ -63,7 +64,44 @@
 
             //Assert
             $this->assertEquals($test_id, $result);
+        }
 
+        function testSave()
+        {
+            //Arrange
+            $test_name = "Intro to Computer Science";
+            $test_course_number = "CSE101";
+            $test_id = null;
+            $test_course = new Course($test_name, $test_course_number, $test_id);
+
+            //Act
+            $test_course->save();
+
+            //Assert
+            $result = Course::getAll();
+            $this->assertEquals($test_course, $result[0]);
+        }
+
+        function testGetAll()
+        {
+            $test_course_name = "Intro to Computer Science";
+            $test_course_number = "CSE101";
+            $test_id = null;
+            $test_course = new Course($test_course_name, $test_course_number, $test_id);
+            $test_course->save();
+
+                    //Create test Course #2
+            $test_course_name2 = "Biology";
+            $test_course_number2 = "BIO101";
+            $test_id = null;
+            $test_course2 = new Course($test_course_name2, $test_course_number2, $test_id);
+            $test_course2->save();
+
+            //Act
+            $result = Course::getAll();
+
+            //Assert
+            $this->assertEquals([$test_course, $test_course2], $result);
         }
 
         function testDeleteAll()
@@ -80,8 +118,8 @@
             $test_course_name2 = "Biology";
             $test_course_number2 = "BIO101";
             $test_id = null;
-            $test_course = new Course($test_course_name2, $test_course_number2, $test_id);
-            $test_course->save();
+            $test_course2 = new Course($test_course_name2, $test_course_number2, $test_id);
+            $test_course2->save();
 
             //Act
             Course::deleteAll();
@@ -89,8 +127,13 @@
 
             //Assert
             $this->assertEquals([], $result);
-
         }
+
+
+
+
+
+
 
     }
 

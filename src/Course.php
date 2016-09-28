@@ -9,7 +9,7 @@
         function __construct($input_name, $input_course_number, $course_id = null)
         {
             $this->name = $input_name;
-            $this->number = $input_course_number;
+            $this->course_number = $input_course_number;
             $this->id = $course_id;
         }
 
@@ -20,7 +20,7 @@
 
         function setCourseName($input_course_name)
         {
-            $this->name = (string) $course_name;
+            $this->name = (string) $input_course_name;
         }
 
         function getCourseName()
