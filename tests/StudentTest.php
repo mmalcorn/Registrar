@@ -18,6 +18,7 @@
         protected function tearDown()
         {
             Student::deleteAll();
+            Course::deleteAll();
         }
 
         function testGetStudentName()
@@ -128,6 +129,76 @@
             $this->assertEquals([], $result);
 
         }
+
+        function testFindStudent()
+        {
+            //Arrange
+            $test_student_name = "Pochantas";
+            $test_enrollment_date = "1986-09-01";
+            $test_student = new Student($test_student_name, $test_enrollment_date);
+            $test_student->save();
+
+            $test_name_two = "Pablo Picasso";
+            $test_enrollment_date_two = "2016-11-01";
+            $test_student_two = new Student($test_name_two, $test_enrollment_date_two);
+            $test_student_two->save();
+
+            //Act
+            $result = Student::find($test_student->getId());
+
+            //Assert
+            $this->assertEquals($test_student, $result);
+
+        }
+        function testGetCourse()
+        {
+            //Arrange
+            $test_course_name = "Intro to Kundalini Awakening";
+            $test_course_number = "KA101";
+            $test_course = new Course($test_course_name, $test_course_number);
+            $test_course->save();
+
+            $test_course_name2 = "Intro to Computer Science";
+            $test_course_number2 = "CSE101";
+            $test_course2 = new Course($test_course_name2, $test_course_number2);
+            $test_course2->save();
+
+            $test_student_name = "Deirdra Rain";
+            $test_enrollment_date = "2016-04-01";
+            $test_student = new Student($test_student_name, $test_enrollment_date);
+            $test_student->save();
+
+            //Act
+            $test_student->addCourse($test_course);
+            $test_student->addCourse($test_course2);
+
+            //Assert
+            $this->assertEquals($test_student->getCourse(), [$test_course, $test_course2]);
+
+        }
+
+        function testAddCourse()
+        {
+            //Arrange
+            $test_course_name = "Intro to Computer Science";
+            $test_course_number = "CSE101";
+            $test_course = new Course($test_course_name, $test_course_number);
+            $test_course->save();
+
+            $test_student_name = "Pochantas";
+            $test_enrollment_date = "1986-09-01";
+            $test_student = new Student($test_student_name, $test_enrollment_date);
+            $test_student->save();
+
+            //Act
+            $test_student->addCourse($test_course);
+
+            //Assert
+            $this->assertEquals($test_student->getCourse(), [$test_course]);
+        }
+
+
+
 
 
     }

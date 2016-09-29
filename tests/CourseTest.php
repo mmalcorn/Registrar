@@ -129,11 +129,51 @@
             $this->assertEquals([], $result);
         }
 
+        function testGetStudent()
+        {
+            //Arrange
+            $test_student_name = "Pochantas";
+            $test_enrollment_date = "1986-09-01";
+            $test_student = new Student($test_student_name, $test_enrollment_date);
+            $test_student->save();
 
+            $test_student_name2 = "John Smith";
+            $test_enrollment_date2 = "1986-09-01";
+            $test_student2 = new Student($test_student_name, $test_enrollment_date);
+            $test_student2->save();
 
+            $test_course_name = "Intro to Kundalini Awakening";
+            $test_course_number = "KA101";
+            $test_course = new Course($test_course_name, $test_course_number);
+            $test_course->save();
 
+            //Act
+            $test_course->addStudent($test_student);
+            $test_course->addStudent($test_student2);
 
+            //Assert
+            $this->assertEquals($test_course->getStudent(), [$test_student, $test_student2]);
+        }
 
+        function testAddStudent()
+        {
+            //Arrange
+            $test_student_name = "Jilly Jives";
+            $test_enrollment_date = "1976-07-14";
+            $test_student = new Student($test_student_name, $test_enrollment_date);
+            $test_student->save();
+
+            $test_course_name = "Intro to Kundalini Awakening";
+            $test_course_number = "KA101";
+            $test_course = new Course($test_course_name, $test_course_number);
+            $test_course->save();
+
+            //Act
+            $test_course->addStudent($test_student);
+
+            //Assert
+            $this->assertEquals($test_course->getStudent(), [$test_student]);
+        }
 
     }
 
